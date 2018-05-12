@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>document</title>
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        $(document).ready(function() {
+            function Draw_Rose(winds) {
+                var rose = document.querySelector("canvas").getContext("2d");
+                rose.beginPath();
+                for (var i = 0; i < winds.size; ++i) {
+                    var corner = winds[i][0],
+                        vector = winds[i][1];
+                    winds[i][0] = Math.acos(corner) * vector;
+                    winds[i][1] = winds[i][0] * Math.atan(corner);
+                }
+                for (i = 0; i < winds.size - 1; ++i) {
+                    rose.moveTo(winds[i][0], winds[i][1]);
+                    rose.lineTo(winds[i + 1][0], winds[i + 1][1]);
+                }
+                rose.moveTo(winds[winds.length - 1][0], winds[winds.length - 1][1]);
+                rose.lineTo(winds[0][0], winds[0][1]);
+                rose.closePath();
+                rose.stroke();
+            }
+
+            var To_Take = [
+                [123, 123],
+                [623, 532],
+                [345, 341]
+            ];
+
+            Draw_Rose(To_Take);
+        });
+
+    </script>
+</head>
+
+<body>
+    <canvas height="100%" width="100%"></canvas>
+</body>
+
+</html>
